@@ -25,6 +25,7 @@ class WarehouseStockController extends Controller
                 'products.id',
                 'products.item_name',
                 'products.item_code',
+                'products.barcode_path',
                 'products.unit_id',
                 'products.price',
                 'products.created_at',
@@ -34,7 +35,8 @@ class WarehouseStockController extends Controller
         if ($search) {
             $query->where(function($q) use ($search) {
                 $q->where('products.item_name', 'like', "%{$search}%")
-                  ->orWhere('products.item_code', 'like', "%{$search}%");
+                  ->orWhere('products.item_code', 'like', "%{$search}%")
+                  ->orWhere('products.barcode_path', 'like', "%{$search}%");
             });
         }
 

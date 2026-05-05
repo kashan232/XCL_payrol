@@ -87,25 +87,69 @@
             </div>
             @endif
             <!-- ================= BASIC INFO ================= -->
+            <style>
+                .from-location-group .form-check-input {
+                    display: none;
+                }
+                .from-location-group .form-check-label {
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                    border: 1px solid #dee2e6;
+                    background: #fff;
+                    display: block;
+                    width: 100%;
+                }
+                .from-location-group .form-check-input:checked + .form-check-label {
+                    background-color: #2563eb;
+                    color: white !important;
+                    border-color: #2563eb;
+                    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+                    transform: translateY(-1px);
+                }
+                .from-location-group .form-check-label:hover:not(.form-check-input:checked + .form-check-label) {
+                    background-color: #f8fafc;
+                    border-color: #cbd5e1;
+                }
+            </style>
             <div class="form-section">
-                <h6>📄 Transfer Information</h6>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6>📄 Transfer Information</h6>
+                    <div class="col-md-3">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text bg-light border-end-0 text-muted">📅</span>
+                            <input type="date" name="transfer_date" class="form-control border-start-0 ps-0" value="{{ date('Y-m-d') }}">
+                        </div>
+                    </div>
+                </div>
 
                 <div class="row g-4">
-                    <div class="col-md-4">
-                        <label>Date</label>
-                        <input type="date" name="transfer_date" class="form-control"
-                            value="{{ date('Y-m-d') }}">
-                    </div>
+                    <div class="col-md-12">
+                        <label class="fw-bold d-block mb-3 text-muted small text-uppercase tracking-wider">Select Source Location (From):</label>
+                        <div class="row g-3 from-location-group">
+                            <!-- Shop Radio -->
+                            <div class="col-6 col-sm-4 col-md-2">
+                                <div class="form-check p-0 m-0">
+                                    <input class="form-check-input fromLocation" type="radio" name="from_warehouse_id" id="fromShop" value="Shop">
+                                    <label class="form-check-label fw-bold p-3 rounded-3 shadow-sm text-center" for="fromShop">
+                                        <div class="fs-4 mb-1">🏪</div>
+                                        <div>Shop Stock</div>
+                                    </label>
+                                </div>
+                            </div>
 
-                    <div class="col-md-4">
-                        <label>From Warehouse</label>
-                        <select name="from_warehouse_id" id="from_warehouse_id" class="form-control select2">
-                            <option value="">Select Warehouse</option>
-                            <option value="Shop">Shop</option>
+                            <!-- Warehouse Radios -->
                             @foreach($warehouses as $warehouse)
-                            <option value="{{ $warehouse->id }}">{{ $warehouse->warehouse_name }}</option>
+                            <div class="col-6 col-sm-4 col-md-2">
+                                <div class="form-check p-0 m-0">
+                                    <input class="form-check-input fromLocation" type="radio" name="from_warehouse_id" id="fromWh{{ $warehouse->id }}" value="{{ $warehouse->id }}">
+                                    <label class="form-check-label fw-bold p-3 rounded-3 shadow-sm text-center" for="fromWh{{ $warehouse->id }}">
+                                        <div class="fs-4 mb-1">🏭</div>
+                                        <div class="text-truncate">{{ $warehouse->warehouse_name }}</div>
+                                    </label>
+                                </div>
+                            </div>
                             @endforeach
-                        </select>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -404,7 +448,7 @@
         });
 
         function refreshStockForAllRows() {
-            var fromWarehouse = $('#from_warehouse_id').val();
+            var fromWarehouse = $('.fromLocation:checked').val();
             if (!fromWarehouse) {
                 $('#product_body tr').find('.stock').val('');
                 return;
@@ -424,7 +468,7 @@
             });
         }
 
-        $('#from_warehouse_id').on('change', function() {
+        $(document).on('change', '.fromLocation', function() {
             refreshStockForAllRows();
         });
 

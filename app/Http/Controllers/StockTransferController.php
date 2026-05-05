@@ -93,11 +93,12 @@ class StockTransferController extends Controller
             $quantities = $request->quantity;
 
             $request->validate([
-                'transfer_to'  => 'required|in:shop,warehouse',
-                'product_id'   => 'required|array|min:1',
-                'product_id.*' => 'required|integer|exists:products,id',
-                'quantity'     => 'required|array',
-                'quantity.*'   => 'required|numeric|min:0.01',
+                'from_warehouse_id' => 'required',
+                'transfer_to'       => 'required|in:shop,warehouse',
+                'product_id'        => 'required|array|min:1',
+                'product_id.*'      => 'required|integer|exists:products,id',
+                'quantity'          => 'required|array',
+                'quantity.*'        => 'required|numeric|min:0.01',
             ]);
 
             $fromWarehouse = $request->from_warehouse_id;

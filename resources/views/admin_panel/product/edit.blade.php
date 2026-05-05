@@ -198,7 +198,7 @@
                                                 <!-- Unit -->
                                                 <div class="col-sm-4">
                                                     <label class="form-label">Unit (UOM)</label>
-                                                    <select name="unit" class="form-select" required>
+                                                    <select name="unit" id="unit" class="form-select" required>
                                                         <option value="Piece" {{ $product->unit_id == 'Piece' ? 'selected' : '' }}>Piece</option>
                                                         <option value="Meter" {{ $product->unit_id == 'Meter' ? 'selected' : '' }}>Meter</option>
                                                         <option value="Yards" {{ $product->unit_id == 'Yards' ? 'selected' : '' }}>Yards</option>
@@ -258,27 +258,126 @@
 @endsection
 
 @section('scripts')
-  <script>
-           document.getElementById('imageInput').addEventListener('change', function(event) {
-    let file = event.target.files[0];
-    if (file) {
-        let reader = new FileReader();
-        reader.onload = function(e) {
-            let preview = document.getElementById('preview');
-            preview.src = e.target.result;
-            preview.style.display = 'block';
-            document.getElementById('clearImageBtn').style.display = 'inline-block';
+    <script>
+        $(document).ready(function() {
+            // Initialize Select2
+            $('#category').select2({
+                placeholder: "Select Category",
+                width: '100%'
+            });
+            $('#subcategory').select2({
+                placeholder: "Select Subcategory",
+                width: '100%'
+            });
+            $('select[name="brand_id"]').select2({
+                placeholder: "Select Brand",
+                width: '100%'
+            });
+            $('#unit').select2({
+                placeholder: "Select Unit",
+                width: '100%'
+            });
+
+            // Handle Category Change
+            $('#category').on('change', function() {
+                var categoryId = $(this).val();
+                if (categoryId) {
+                    $.ajax({
+                        url: '/get-subcategories/' + categoryId,
+                        type: "GET",
+                        dataType: "json",
+                        success: function(data) {
+                            $('#subcategory').empty();
+                            $('#subcategory').append('<option value="">Select Subcategory</option>');
+                            $.each(data, function(key, value) {
+                                $('#subcategory').append('<option value="' + value.id + '">' + value.name + '</option>');
+                            });
+                            $('#subcategory').trigger('change');
+                        }
+                    });
+                } else {
+                    $('#subcategory').empty();
+                    $('#subcategory').append('<option value="">Select Subcategory</option>');
+                    $('#subcategory').trigger('change');
+                }
+            });
+
+            // Barcode Generation
+            $('#generateBarcodeBtn').on('click', function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: '{{ route("generate-barcode-image") }}',
+                    type: 'GET',
+                    success: function(data) {
+                        $('#barcodeInput').val(data.barcode_number);
+                        // alert("Barcode generated: " + data.barcode_number);
+                    },
+                    error: function() {
+                        alert("Error generating barcode.");
+                    }
+                });
+            });
+
+            // Image Preview
+            $('#imageInput').on('change', function(event) {
+                let file = event.target.files[0];
+                if (file) {
+                    let reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#preview').attr('src', e.target.result).show();
+                        $('#clearImageBtn').show();
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            $('#clearImageBtn').on('click', function() {
+                $('#imageInput').val("");
+                $('#preview').attr('src', "{{ asset('uploads/products/' . $product->image) }}");
+                $(this).hide();
+            });
+
+            // Improve Tab Navigation for Select2
+            // Open Select2 on focus
+            $(document).on('focus', '.select2-selection--single', function(e) {
+                $(this).closest(".select2-container").siblings('select:enabled').select2('open');
+            });
+
+            // Handle Tab key in Select2 search field
+            $(document).on('keydown', '.select2-search__field', function(e) {
+                if (e.which === 9) { // Tab key
+                    var select2 = $(this).closest('.select2-container').prev('select');
+                    select2.select2('close');
+                    
+                    // Move to next focusable element
+                    var focusables = $(':focusable');
+                    var next = focusables.eq(focusables.index(this) + 1);
+                    if (next.length) {
+                        next.focus();
+                    }
+                }
+            });
+
+            // Generic "Enter to Tab" or just ensuring Tab works
+            $('input, select, textarea').on('keydown', function(e) {
+                if (e.which === 9) { // Tab
+                    // Let default happen, but for Select2 we might need help
+                }
+            });
+        });
+
+        // jQuery UI :focusable selector polyfill if not present
+        if (!$.expr[':'].focusable) {
+            $.expr[':'].focusable = function(element) {
+                var nodeName = element.nodeName.toLowerCase(),
+                    tabIndex = $(element).attr('tabindex');
+                return (/^(input|select|textarea|button|object)$/.test(nodeName) ?
+                    !element.disabled :
+                    'a' === nodeName ?
+                    element.href || !isNaN(tabIndex) :
+                    !isNaN(tabIndex)
+                ) && $(element).is(':visible');
+            };
         }
-        reader.readAsDataURL(file);
-    }
-});
-
-document.getElementById('clearImageBtn').addEventListener('click', function() {
-    document.getElementById('imageInput').value = "";
-    let preview = document.getElementById('preview');
-    preview.src = "{{ asset('uploads/products/' . $product->image) }}"; // Purani image wapas
-    this.style.display = 'none';
-});
-
-        </script>
+    </script>
 @endsection

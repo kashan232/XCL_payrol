@@ -74,7 +74,7 @@
 
             <div class="col-12 col-md-3">
                 <label class="form-label fw-bold">Search Product:</label>
-                <input type="text" name="search" id="warehouseStockSearch" class="form-control form-control-sm" placeholder="Name or Code..." value="{{ request('search') }}">
+                <input type="text" name="search" id="warehouseStockSearch" class="form-control form-control-sm" placeholder="Name, Code or Barcode..." value="{{ request('search') }}">
             </div>
 
             <div class="col-md-2">
@@ -112,6 +112,7 @@
                         <th>Date</th>
                         <th>Location</th>
                         <th>Product</th>
+                        <th>Barcode</th>
                         <th>Unit</th>
                         <th>Brand</th>
                         <th>Price</th>
@@ -131,6 +132,7 @@
                             <strong>{{ $stock->item_name }}</strong><br>
                             <small class="text-muted">{{ $stock->item_code }}</small>
                         </td>
+                        <td>{{ $stock->barcode_path }}</td>
                         <td>{{ $stock->unit_id }}</td>
                         <td>{{ $stock->brand_name ?? 'N/A' }}</td>
                         <td>{{ number_format($stock->price, 2) }}</td>
@@ -253,21 +255,22 @@
 
         // parse a table row (returns array in export column order)
         function parseStockRow(tr) {
-            // columns: # | Date | Warehouse | Product | Shop Stock | Warehouse Stock | Total Stock | Remarks
+            // columns: # | Date | Location | Product | Barcode | Unit | Brand | Price | Shop Stock | Warehouse Stock | Total Stock | Remarks
             var $tds = $(tr).find('td');
             var date = $tds.eq(1).text().trim();
-            var warehouse = $tds.eq(2).text().trim();
+            var location = $tds.eq(2).text().trim();
             var product = $tds.eq(3).text().trim();
-            var shopStock = toNumber($tds.eq(4).text());
-            var warehouseStock = toNumber($tds.eq(5).text());
-            var totalStock = toNumber($tds.eq(6).text());
-            var remarks = $tds.eq(7).text().trim();
-            return [date, warehouse, product, shopStock, warehouseStock, totalStock, remarks];
+            var barcode = $tds.eq(4).text().trim();
+            var shopStock = toNumber($tds.eq(8).text());
+            var warehouseStock = toNumber($tds.eq(9).text());
+            var totalStock = toNumber($tds.eq(10).text());
+            var remarks = $tds.eq(11).text().trim();
+            return [date, location, product, barcode, shopStock, warehouseStock, totalStock, remarks];
         }
 
         // build workbook and download
         function buildAndDownload(rowsArray, filename) {
-            var header = ['Date', 'Warehouse', 'Product', 'Shop Stock', 'Warehouse Stock', 'Total Stock', 'Remarks'];
+            var header = ['Date', 'Location', 'Product', 'Barcode', 'Shop Stock', 'Warehouse Stock', 'Total Stock', 'Remarks'];
             var aoa = [header].concat(rowsArray);
             var ws = XLSX.utils.aoa_to_sheet(aoa);
             // set column widths
