@@ -243,7 +243,7 @@
             </div>
             <!-- ===== HEADER ===== -->
             <div class="center">
-                <h2 class="title">WIJDAN</h2>
+                <h2 class="title">XCL</h2>
                 <p class="subtitle">EXCLUSIVE STORE</p>
                 <p style="margin:0">Chandni market, Salahuddin Road, Cantt, Hyderabad</p>
                 <p style="margin:0">Phone: 022786661</p>
@@ -395,7 +395,7 @@
             </div>
             <!-- ===== HEADER ===== -->
             <div class="center">
-                <h2 class="title">WIJDAN</h2>
+                <h2 class="title">XCL</h2>
                 <p class="subtitle">EXCLUSIVE STORE</p>
                 <p style="margin:0">Chandni market, Salahuddin Road, Cantt, Hyderabad</p>
                 <p style="margin:0">Phone: 022786661</p>

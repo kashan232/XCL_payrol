@@ -1,8 +1,8 @@
     {{--  @yield('scripts')  --}}
 
-    <footer>
-        <div class="footer-area">
-            <p>&copy; Copyright 2025. All right reserved. Wijdan.</p>
+    <footer style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 1.5rem 0; margin-top: 3rem;">
+        <div class="footer-area text-center">
+            <p style="color: #64748b; font-weight: 500; font-family: 'Inter', sans-serif; margin: 0;">&copy; Copyright 2025. All right reserved. <span style="color: #6366f1; font-weight: 700;">XCL Technologies</span>.</p>
         </div>
     </footer>
     </div>

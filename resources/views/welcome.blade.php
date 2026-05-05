@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Wijdan Admin Panel</title>
+    <title>Welcome to XCL Technologies Payroll Management system</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:700&display=swap" rel="stylesheet" />
@@ -27,32 +27,31 @@
             color: #f9fafb;
             text-align: center;
             
-            /* === YAHAN BADLAAV KIYA GAYA HAI === */
-            /* Background image ke upar halki si dark layer taaki text saaf dikhe */
+            /* Modern Premium Background */
             background-image: 
-                linear-gradient(rgba(17, 24, 39, 0.7), rgba(17, 24, 39, 0.7)), 
-                url('C7AA8C11-D2D0-4963-8962-4CF427396551.webp');
+                linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.8)), 
+                url('{{ asset('assets/images/payroll_bg.png') }}');
             
-            background-size: cover; /* Image ko poori screen par fit karega */
-            background-position: center; /* Image ko center mein rakhega */
-            background-repeat: no-repeat; /* Image repeat nahi hogi */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
         
         /* Glassmorphism content box */
         .content-box {
-            padding: 3rem 4.5rem;
-            background: rgba(31, 41, 55, 0.45); /* Semi-transparent dark gray */
-            border-radius: 1rem;
+            padding: 4rem 5rem;
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 2rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            animation: slide-in 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: slide-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
         @keyframes slide-in {
             from {
-                transform: translateY(50px);
+                transform: translateY(30px);
                 opacity: 0;
             }
             to {
@@ -63,47 +62,72 @@
         
         /* Welcome Title */
         h1 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 2.5rem;
-            letter-spacing: 1px;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.025em;
+        }
+
+        p {
+            font-size: 1.25rem;
+            color: #94a3b8;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         /* Login Button */
         .login-btn {
-            display: inline-block;
-            padding: 1rem 3rem;
+            display: inline-flex;
+            align-items: center;
+            padding: 1.25rem 3.5rem;
             border: none;
-            border-radius: 0.5rem;
-            background: #4F46E5; /* Indigo color */
+            border-radius: 1rem;
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
             color: white;
             font-size: 1.1rem;
             font-weight: 700;
             text-decoration: none;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(79, 70, 229, 0.5);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
         }
 
         .login-btn:hover {
-            background: #4338CA; /* Darker Indigo */
-            transform: translateY(-4px);
-            box-shadow: 0 7px 25px rgba(79, 70, 229, 0.6);
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 20px 35px -10px rgba(79, 70, 229, 0.5);
+            background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
         }
 
         .login-btn:active {
-            transform: translateY(-1px);
+            transform: scale(0.98);
+        }
+
+        .logo-text {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: #6366f1;
+            margin-bottom: 1rem;
+            font-weight: 700;
         }
     </style>
 </head>
 <body class="antialiased">
     <div class="main-container">
        <div class="content-box">
-            <h1>Welcome to Wijdan Admin</h1>
+            <div class="logo-text">XCL Technologies</div>
+            <h1>Payroll Management System</h1>
+            <p>Streamline your workforce management with our advanced and intuitive payroll solution.</p>
             
             @if (Route::has('login'))
-                <a href="{{ route('login') }}" class="login-btn">Admin Login</a>
+                <a href="{{ route('login') }}" class="login-btn">
+                    <span>Access Dashboard</span>
+                </a>
             @endif
        </div>
     </div>
