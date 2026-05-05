@@ -1,3 +1,29 @@
+<style>
+    .nav-item.mega-menu {
+        position: relative;
+    }
+    .nav-item.mega-menu:hover .submenu {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        margin-top: 0 !important;
+    }
+    .submenu {
+        top: 100% !important;
+        left: 0 !important;
+        z-index: 1000 !important;
+    }
+    /* Bridge the gap so the menu doesn't disappear when moving the mouse */
+    .submenu::before {
+        content: "";
+        position: absolute;
+        top: -15px;
+        left: 0;
+        width: 100%;
+        height: 15px;
+        background: transparent;
+    }
+</style>
 <div class="container-scroller">
 
     <nav class="rt_nav_header horizontal-layout col-lg-12 col-12 p-0" style="background: #0f172a; border-bottom: 1px solid rgba(255,255,255,0.1);">
@@ -33,84 +59,83 @@
             </div>
         </div>
         <div class="nav-bottom" style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 0.5rem 0;">
-            <div class="container" style="max-width: 1200px;">
-                <ul class="nav page-navigation" style="justify-content: center; gap: 1.5rem; border: none;">
+            <div class="container-fluid" style="padding: 0 1rem;">
+                <ul class="nav page-navigation" style="justify-content: center; gap: 0.75rem; border: none; flex-wrap: nowrap;">
                     <li class="nav-item">
-                        <a href="{{ url('/home') }}" class="nav-link" style="color: #475569; font-weight: 600; padding: 0.75rem 1rem; border-radius: 0.75rem; transition: all 0.2s; font-size: 0.95rem; display: flex; align-items: center;">
-                            <i class="menu_icon fas fa-th-large mr-2" style="font-size: 0.9rem; color: #6366f1;"></i><span class="menu-title">Dashboard</span>
+                        <a href="{{ url('/home') }}" class="nav-link" style="color: #475569; font-weight: 700; padding: 0.75rem 1.25rem; border-radius: 0.75rem; transition: all 0.2s; font-size: 1.05rem; display: flex; align-items: center; white-space: nowrap;">
+                            <span>Dashboard</span>
                         </a>
                     </li>
 
                     @can('hr.employees.view')
                     <li class="nav-item">
-                        <a href="{{ route('hr.employees.index') }}" class="nav-link" style="color: #475569; font-weight: 600; padding: 0.75rem 1rem; border-radius: 0.75rem; transition: all 0.2s; font-size: 0.95rem; display: flex; align-items: center;">
-                            <i class="fas fa-user-friends mr-2" style="font-size: 0.9rem; color: #6366f1;"></i><span class="menu-title">Employees</span>
+                        <a href="{{ route('hr.employees.index') }}" class="nav-link" style="color: #475569; font-weight: 700; padding: 0.75rem 1.25rem; border-radius: 0.75rem; transition: all 0.2s; font-size: 1.05rem; display: flex; align-items: center; white-space: nowrap;">
+                            <span>Employees</span>
                         </a>
                     </li>
                     @endcan
 
                     @can('hr.attendance.view')
                     <li class="nav-item">
-                        <a href="{{ route('hr.attendance.index') }}" class="nav-link" style="color: #475569; font-weight: 600; padding: 0.75rem 1rem; border-radius: 0.75rem; transition: all 0.2s; font-size: 0.95rem; display: flex; align-items: center;">
-                            <i class="fas fa-calendar-check mr-2" style="font-size: 0.9rem; color: #6366f1;"></i><span class="menu-title">Attendance</span>
+                        <a href="{{ route('hr.attendance.index') }}" class="nav-link" style="color: #475569; font-weight: 700; padding: 0.75rem 1.25rem; border-radius: 0.75rem; transition: all 0.2s; font-size: 1.05rem; display: flex; align-items: center; white-space: nowrap;">
+                            <span>Attendance</span>
                         </a>
                     </li>
                     @endcan
 
                     @can('hr.payroll.view')
                     <li class="nav-item">
-                        <a href="{{ route('hr.payroll.index') }}" class="nav-link" style="color: #475569; font-weight: 600; padding: 0.75rem 1rem; border-radius: 0.75rem; transition: all 0.2s; font-size: 0.95rem; display: flex; align-items: center;">
-                            <i class="fas fa-money-check-alt mr-2" style="font-size: 0.9rem; color: #6366f1;"></i><span class="menu-title">Payroll</span>
+                        <a href="{{ route('hr.payroll.index') }}" class="nav-link" style="color: #475569; font-weight: 700; padding: 0.75rem 1.25rem; border-radius: 0.75rem; transition: all 0.2s; font-size: 1.05rem; display: flex; align-items: center; white-space: nowrap;">
+                            <span>Payroll</span>
                         </a>
                     </li>
                     @endcan
 
                     @can('hr.leaves.view')
                     <li class="nav-item">
-                        <a href="{{ route('hr.leaves.index') }}" class="nav-link" style="color: #475569; font-weight: 600; padding: 0.75rem 1rem; border-radius: 0.75rem; transition: all 0.2s; font-size: 0.95rem; display: flex; align-items: center;">
-                            <i class="fas fa-calendar-minus mr-2" style="font-size: 0.9rem; color: #6366f1;"></i><span class="menu-title">Leaves</span>
+                        <a href="{{ route('hr.leaves.index') }}" class="nav-link" style="color: #475569; font-weight: 700; padding: 0.75rem 1.25rem; border-radius: 0.75rem; transition: all 0.2s; font-size: 1.05rem; display: flex; align-items: center; white-space: nowrap;">
+                            <span>Leaves</span>
                         </a>
                     </li>
                     @endcan
 
                     @can('hr.loans.view')
                     <li class="nav-item">
-                        <a href="{{ route('hr.loans.index') }}" class="nav-link" style="color: #475569; font-weight: 600; padding: 0.75rem 1rem; border-radius: 0.75rem; transition: all 0.2s; font-size: 0.95rem; display: flex; align-items: center;">
-                            <i class="fas fa-hand-holding-usd mr-2" style="font-size: 0.9rem; color: #6366f1;"></i><span class="menu-title">Loans</span>
+                        <a href="{{ route('hr.loans.index') }}" class="nav-link" style="color: #475569; font-weight: 700; padding: 0.75rem 1.25rem; border-radius: 0.75rem; transition: all 0.2s; font-size: 1.05rem; display: flex; align-items: center; white-space: nowrap;">
+                            <span>Loans</span>
                         </a>
                     </li>
                     @endcan
 
                     @can('hr.salary.structure.view')
                     <li class="nav-item">
-                        <a href="{{ route('hr.salary-structure.index') }}" class="nav-link" style="color: #475569; font-weight: 600; padding: 0.75rem 1rem; border-radius: 0.75rem; transition: all 0.2s; font-size: 0.95rem; display: flex; align-items: center;">
-                            <i class="fas fa-file-invoice-dollar mr-2" style="font-size: 0.9rem; color: #6366f1;"></i><span class="menu-title">Salaries</span>
+                        <a href="{{ route('hr.salary-structure.index') }}" class="nav-link" style="color: #475569; font-weight: 700; padding: 0.75rem 1.25rem; border-radius: 0.75rem; transition: all 0.2s; font-size: 1.05rem; display: flex; align-items: center; white-space: nowrap;">
+                            <span>Salaries</span>
                         </a>
                     </li>
                     @endcan
 
                     <li class="nav-item mega-menu">
-                        <a href="#" class="nav-link" style="color: #475569; font-weight: 600; padding: 0.75rem 1rem; border-radius: 0.75rem; transition: all 0.2s; font-size: 0.95rem; display: flex; align-items: center;">
-                            <i class="fas fa-cog mr-2" style="font-size: 0.9rem; color: #6366f1;"></i>
-                            <span class="menu-title">Setup</span>
+                        <a href="#" class="nav-link" style="color: #475569; font-weight: 700; padding: 0.75rem 1.25rem; border-radius: 0.75rem; transition: all 0.2s; font-size: 1.05rem; display: flex; align-items: center; white-space: nowrap;">
+                            <span>Setup</span>
                             <i class="menu-arrow ml-1"></i>
                         </a>
-                        <div class="submenu" style="border-radius: 1rem; border: none; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); overflow: hidden;">
+                        <div class="submenu" style="border-radius: 1rem; border: none; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); overflow: hidden; min-width: 200px; width: max-content;">
                             <ul class="submenu-item">
                                 @can('hr.departments.view')
-                                <li class="nav-item"><a class="nav-link" href="{{ route('hr.departments.index') }}"><i class="fas fa-sitemap mr-2"></i> <span class="menu-title">Departments</span></a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('hr.departments.index') }}" style="display: flex; align-items: center; padding: 0.75rem 1.5rem; color: #475569; white-space: nowrap;"><span style="display: inline-block; font-weight: 700; font-size: 0.95rem;">Departments</span></a></li>
                                 @endcan
                                 @can('hr.designations.view')
-                                <li class="nav-item"><a class="nav-link" href="{{ route('hr.designations.index') }}"><i class="fas fa-user-tag mr-2"></i> <span class="menu-title">Designations</span></a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('hr.designations.index') }}" style="display: flex; align-items: center; padding: 0.75rem 1.5rem; color: #475569; white-space: nowrap;"><span style="display: inline-block; font-weight: 700; font-size: 0.95rem;">Designations</span></a></li>
                                 @endcan
                                 @can('hr.shifts.view')
-                                <li class="nav-item"><a class="nav-link" href="{{ route('hr.shifts.index') }}"><i class="fas fa-clock mr-2"></i> <span class="menu-title">Shifts</span></a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('hr.shifts.index') }}" style="display: flex; align-items: center; padding: 0.75rem 1.5rem; color: #475569; white-space: nowrap;"><span style="display: inline-block; font-weight: 700; font-size: 0.95rem;">Shifts</span></a></li>
                                 @endcan
                                 @can('hr.holidays.view')
-                                <li class="nav-item"><a class="nav-link" href="{{ route('hr.holidays.index') }}"><i class="fas fa-umbrella-beach mr-2"></i> <span class="menu-title">Holidays</span></a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('hr.holidays.index') }}" style="display: flex; align-items: center; padding: 0.75rem 1.5rem; color: #475569; white-space: nowrap;"><span style="display: inline-block; font-weight: 700; font-size: 0.95rem;">Holidays</span></a></li>
                                 @endcan
                                 @can('hr.biometric.devices.view')
-                                <li class="nav-item"><a class="nav-link" href="{{ route('hr.biometric-devices.index') }}"><i class="fas fa-fingerprint mr-2"></i> <span class="menu-title">Biometric</span></a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('hr.biometric-devices.index') }}" style="display: flex; align-items: center; padding: 0.75rem 1.5rem; color: #475569; white-space: nowrap;"><span style="display: inline-block; font-weight: 700; font-size: 0.95rem;">Biometric Devices</span></a></li>
                                 @endcan
                             </ul>
                         </div>
